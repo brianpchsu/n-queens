@@ -130,10 +130,22 @@
       var count = 0;
       var column = majorDiagonalColumnIndexAtFirstRow;
 
-      for(var i = 0; column < this.get('n'); i++){
-        count += table[i][column];
-        column++;
+      for(var row = 0; row < this.get('n'); row++){
+
+          if(table[row][column] !== undefined){
+            count += table[row][column];
+          }
+          column++;
       }
+      return count > 1;
+      // [ row, col]
+      // [0, 3]
+      // [0, 2],[1, 3]
+      // [0, 1],[1, 2],[2, 3]
+      // [0, 0],[1, 1],[2, 2],[3, 3]
+      // [1, 0],[2, 1],[3, 2]
+      // [2, 0],[3, 1]
+      // [3, 0]
 
       return count > 1;
     },
@@ -159,8 +171,10 @@
       var count = 0;
       var column = minorDiagonalColumnIndexAtFirstRow;
 
-      for (var i = 0; column >= 0; i++){
-        count += table[i][column];
+      for (var row = 0; row < this.get('n'); row++){
+          if(table[row][column] !== undefined){
+            count += table[row][column];
+          }
         column--;
       }
 
