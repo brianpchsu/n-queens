@@ -15,26 +15,45 @@
 
 window.findNRooksSolution = function(n) {
   var solution = []; //fixme
-  n = 2;
   var newBoard = new Board({'n':n});
 
   var search = function(row, currentSolution){
-    if(n === row){
-      solution.push(currentSolution);
+    // debugger;
+    if(n > 4){
       return;
     }
+    if(n === row){
+      // if(!currentSolution.hasAnyRooksConflicts()){
+        // console.log("HERE" + JSON.stringify(currentSolution.rows()));
+        solution.push(currentSolution.rows().slice());
+      // }
+    }else{
+      for(var col = 0; col < n; col++){
+        console.log("C: " + JSON.stringify(currentSolution.rows()));
+        var newObeject = jQuery.extend({}, currentSolution);
+          if(col === 1){
+            debugger;
+          }
+          console.log("S: " + JSON.stringify(newObeject.rows()));
 
-    for(var col = 0; col < n; col++){
-      if(!currentSolution.hasAnyRooksConflicts()){
-        currentSolution.togglePiece(row, col);
-        search(row+1, currentSolution);
+          newObeject.togglePiece(row, col);
+          // currentSolution.togglePiece(row, col);
+        if(newObeject.hasAnyRooksConflicts()){
+          newObeject.togglePiece(row, col);
+        }else{
+          search(row+1, newObeject);
+          console.log(newObeject.rows());
+
+        }
+          // console.log(row + "," + col);
       }
     }
+
   }
   search(0, newBoard);
-  console.log(solution[0].rows());
+
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
-  return solution[0].rows();
+  return solution[0];
 };
 
 
